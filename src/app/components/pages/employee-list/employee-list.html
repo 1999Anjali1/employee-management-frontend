@@ -1,0 +1,191 @@
+<div class="min-h-screen bg-gray-50">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+        <span class="text-white font-bold text-sm">EM</span>
+      </div>
+      <h1 class="text-xl font-bold text-gray-800">Employee Management</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <button
+        (click)="addEmployee()"
+        class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-5 rounded-lg flex items-center gap-2 transition-colors">
+        <span class="text-lg">+</span> Add Employee
+      </button>
+      <button
+        (click)="goToProfile()"
+        class="w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center text-blue-600 font-semibold text-sm transition-colors">
+        {{ getProfileInitials() }}
+      </button>
+      <button
+        (click)="logout()"
+        class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors">
+        Logout
+      </button>
+    </div>
+  </nav>
+
+  <div class="p-6">
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-blue-500">
+        <p class="text-sm text-gray-500">Total Employees</p>
+        <p class="text-3xl font-bold text-gray-800">{{ employees.length }}</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-green-500">
+        <p class="text-sm text-gray-500">Departments</p>
+        <p class="text-3xl font-bold text-gray-800">{{ getDepartmentCount() }}</p>
+      </div>
+      <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-purple-500">
+        <p class="text-sm text-gray-500">Showing Results</p>
+        <p class="text-3xl font-bold text-gray-800">{{ filteredEmployees.length }}</p>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="mb-4">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+        placeholder="Search by name or department..."
+        class="w-full md:w-1/3 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"/>
+    </div>
+
+    <!-- Loading Spinner -->
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-20">
+        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }
+
+    <!-- Table -->
+    @if (!isLoading) {
+      <div class="bg-white rounded-xl shadow-sm overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">#</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Department</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Position</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Salary</th>
+              <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            @if (filteredEmployees.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center py-12">
+                  <div class="flex flex-col items-center gap-2 text-gray-400">
+                    <span class="text-4xl">👥</span>
+                    <p class="text-sm">No employees found</p>
+                  </div>
+                </td>
+              </tr>
+            }
+            @for (emp of paginatedEmployees; track emp.id) {
+              <tr class="hover:bg-blue-50 transition-colors">
+                <td class="px-6 py-4 text-sm text-gray-500">{{ emp.id }}</td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-sm">
+                      {{ emp.first_name[0] }}{{ emp.last_name[0] }}
+                    </div>
+                    <span class="text-sm font-medium text-gray-800">{{ emp.first_name }} {{ emp.last_name }}</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600">{{ emp.email }}</td>
+                <td class="px-6 py-4">
+                  <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                    {{ emp.department }}
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600">{{ emp.position }}</td>
+                <td class="px-6 py-4 text-sm text-gray-600">{{ emp.salary | currency:'INR':'symbol':'1.0-0' }}</td>
+                <td class="px-6 py-4">
+                  <div class="flex gap-2">
+                    <button
+                      (click)="editEmployee(emp.id!)"
+                      class="bg-amber-400 hover:bg-amber-500 text-white px-3 py-1 rounded-lg text-xs font-medium transition-colors">
+                      Edit
+                    </button>
+                    <button
+                      (click)="deleteEmployee(emp.id!)"
+                      class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-medium transition-colors">
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+
+        <!-- Pagination -->
+        @if (totalPages > 1) {
+          <div class="flex justify-between items-center px-6 py-4 border-t border-gray-100">
+            <p class="text-sm text-gray-500">
+              Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to
+              {{ currentPage * itemsPerPage > filteredEmployees.length ? filteredEmployees.length : currentPage * itemsPerPage }}
+              of {{ filteredEmployees.length }} employees
+            </p>
+            <div class="flex gap-2">
+              <button
+                (click)="goToPage(currentPage - 1)"
+                [disabled]="currentPage === 1"
+                class="px-3 py-1 rounded-lg text-sm border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed">
+                ← Prev
+              </button>
+              @for (page of pages; track page) {
+                <button
+                  (click)="goToPage(page)"
+                  [class]="currentPage === page ?
+                    'px-3 py-1 rounded-lg text-sm bg-blue-600 text-white font-medium' :
+                    'px-3 py-1 rounded-lg text-sm border border-gray-300 hover:bg-gray-50'">
+                  {{ page }}
+                </button>
+              }
+              <button
+                (click)="goToPage(currentPage + 1)"
+                [disabled]="currentPage === totalPages"
+                class="px-3 py-1 rounded-lg text-sm border border-gray-300 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed">
+                Next →
+              </button>
+            </div>
+          </div>
+        }
+
+      </div>
+    }
+  </div>
+   @if (showDeleteModal) {
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4">
+          <div class="flex flex-col items-center text-center">
+            <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4">
+              <span class="text-red-500 text-2xl">🗑️</span>
+            </div>
+            <h3 class="text-lg font-bold text-gray-800 mb-2">Delete Employee</h3>
+            <p class="text-sm text-gray-500 mb-6">Are you sure you want to delete this employee? This action cannot be undone.</p>
+            <div class="flex gap-3 w-full">
+              <button
+                (click)="cancelDelete()"
+                class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-lg transition-colors">
+                Cancel
+              </button>
+              <button
+                (click)="confirmDelete()"
+                class="flex-1 bg-red-500 hover:bg-red-600 text-white font-medium py-2 rounded-lg transition-colors">
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+</div>
