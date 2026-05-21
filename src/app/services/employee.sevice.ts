@@ -18,7 +18,8 @@ export interface Employee {
   providedIn: 'root'
 })
 export class EmployeeService {
-  private apiUrl = 'http://localhost:3000/api/employees';
+  // private apiUrl = 'http://localhost:3000/api/employees'; // local development
+  private apiUrl = 'https://employee-management-backend-lms2.onrender.com/api/employees'; // production
 
   constructor(private http: HttpClient) {}
 
