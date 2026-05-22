@@ -126,4 +126,8 @@ export class EmployeeList implements OnInit {
       error: () => this.toastService.show('Failed to delete employee', 'error')
     });
   }
+
+  goToDashboard(): void {
+  this.router.navigate(['/dashboard']);
+}
 }

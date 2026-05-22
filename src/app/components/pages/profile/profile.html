@@ -1,7 +1,7 @@
 <div class="min-h-screen bg-gray-50">
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+  <!-- <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
     <div class="flex items-center gap-2">
       <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
         <span class="text-white font-bold text-sm">EM</span>
@@ -18,7 +18,7 @@
         Logout
       </button>
     </div>
-  </nav>
+  </nav> -->
 
   <div class="p-6 max-w-3xl mx-auto">
 
@@ -81,12 +81,6 @@
             @if (f['email'].invalid && f['email'].touched) {
               <p class="text-red-500 text-xs mt-1">Valid email is required</p>
             }
-          </div>
-          <div class="mb-4">
-            <label class="block text-xs font-medium text-gray-600 mb-1">New Password</label>
-            <input formControlName="password" type="password"
-              placeholder="Leave blank to keep current"
-              class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           </div>
           <button type="submit"
             [disabled]="profileForm.invalid"

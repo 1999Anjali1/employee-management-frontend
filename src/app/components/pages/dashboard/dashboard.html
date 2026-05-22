@@ -1,0 +1,144 @@
+
+
+  <!-- Navbar -->
+  <!-- <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+        <span class="text-white font-bold text-sm">EM</span>
+      </div>
+      <h1 class="text-xl font-bold text-gray-800">Employee Management</h1>
+      <button (click)="goToEmployees()"
+        class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+        Employees
+      </button>
+    </div>
+    <div class="flex items-center gap-3">
+      <button (click)="goToProfile()"
+        class="w-9 h-9 rounded-full bg-blue-100 hover:bg-blue-200 flex items-center justify-center text-blue-600 font-semibold text-sm">
+        {{ getProfileInitials() }}
+      </button>
+      <button (click)="logout()"
+        class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg">
+        Logout
+      </button>
+    </div>
+  </nav> -->
+
+  <div class="p-6">
+   
+
+    @if (isLoading) {
+      <div class="flex justify-center items-center py-20">
+        <div class="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }
+
+    @if (!isLoading) {
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-blue-500">
+          <p class="text-sm text-gray-500">Total Employees</p>
+          <p class="text-3xl font-bold text-gray-800 mt-1">{{ totalEmployees }}</p>
+          <p class="text-xs text-blue-500 mt-2">👥 All active</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-green-500">
+          <p class="text-sm text-gray-500">Departments</p>
+          <p class="text-3xl font-bold text-gray-800 mt-1">{{ totalDepartments }}</p>
+          <p class="text-xs text-green-500 mt-2">🏢 Active</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-purple-500">
+          <p class="text-sm text-gray-500">Avg Salary</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">{{ avgSalary | currency:'INR':'symbol':'1.0-0' }}</p>
+          <p class="text-xs text-purple-500 mt-2">💰 Per employee</p>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-5 border-l-4 border-amber-500">
+          <p class="text-sm text-gray-500">Highest Salary</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">{{ highestSalary | currency:'INR':'symbol':'1.0-0' }}</p>
+          <p class="text-xs text-amber-500 mt-2">🏆 Top earner</p>
+        </div>
+      </div>
+
+      <!-- Row 1: Bar + Pie -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Employees by Department</h3>
+          <canvas baseChart
+            [data]="barChartData"
+            [options]="barChartOptions"
+            type="bar">
+          </canvas>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Department Share</h3>
+          <canvas baseChart
+            [data]="pieChartData"
+            [options]="pieChartOptions"
+            type="pie">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Row 2: Line + Doughnut -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Hiring Trend</h3>
+          <canvas baseChart
+            [data]="lineChartData"
+            [options]="lineChartOptions"
+            type="line">
+          </canvas>
+        </div>
+        <div class="bg-white rounded-xl shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-gray-800 mb-4">Salary Distribution</h3>
+          <canvas baseChart
+            [data]="doughnutChartData"
+            [options]="doughnutChartOptions"
+            type="doughnut">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Recent Employees -->
+      <!-- <div class="bg-white rounded-xl shadow-sm p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-lg font-semibold text-gray-800">Recent Employees</h3>
+          <button (click)="goToEmployees()"
+            class="text-sm text-blue-600 hover:underline font-medium">
+            View All →
+          </button>
+        </div>
+        <table class="min-w-full divide-y divide-gray-100">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Name</th>
+              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Department</th>
+              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Position</th>
+              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-500 uppercase">Salary</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-50">
+            @for (emp of employees.slice(0,5); track emp.id) {
+              <tr class="hover:bg-gray-50">
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold text-xs">
+                      {{ emp.first_name[0] }}{{ emp.last_name[0] }}
+                    </div>
+                    <span class="text-sm font-medium text-gray-800">{{ emp.first_name }} {{ emp.last_name }}</span>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+                    {{ emp.department }}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">{{ emp.position }}</td>
+                <td class="px-4 py-3 text-sm text-gray-600">{{ emp.salary | currency:'INR':'symbol':'1.0-0' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div> -->
+    }
+  </div>
