@@ -15,6 +15,8 @@ export class EmployeeForm implements OnInit {
   employeeForm!: FormGroup;
   isEditMode = false;
   employeeId!: number;
+  departments: string[] = [];
+  departmentsLoading = true;
 
   constructor(
     private fb: FormBuilder,
@@ -26,6 +28,7 @@ export class EmployeeForm implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
+    this.loadDepartments();
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -93,7 +96,33 @@ export class EmployeeForm implements OnInit {
   }
 }
 
+loadDepartments(retryCount = 0): void {
+  this.departmentsLoading = true;
+  this.employeeService.getDepartments().subscribe({
+    next: (data) => {
+      if (data && data.length > 0) {
+        this.departments = data;
+        this.departmentsLoading = false;
+      } else if (retryCount < 3) {
+        setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
+      } else {
+        this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
+        this.departmentsLoading = false;
+      }
+    },
+    error: () => {
+      if (retryCount < 3) {
+        setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
+      } else {
+        this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
+        this.departmentsLoading = false;
+      }
+    }
+  });
+}
+
   goBack(): void {
     this.router.navigate(['/employees']);
   }
+
 }
