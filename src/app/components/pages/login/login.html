@@ -1,89 +1,113 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col">
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex flex-col">
 
   <!-- Top Bar -->
-  <div class="px-10 py-5 flex justify-between items-center border-b border-gray-100 bg-white shadow-sm">
+  <div class="px-10 py-4 flex justify-between items-center bg-white shadow-sm">
     <div class="flex items-center gap-3">
       <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
         <span class="text-white font-bold text-lg">EM</span>
       </div>
       <div>
-        <h1 class="text-lg font-bold text-gray-800">Employee Management</h1>
-        <p class="text-xs text-gray-400">Powered by Angular 21 + Node.js</p>
+        <h1 class="text-base font-bold text-gray-800">EMS Suite</h1>
+        <p class="text-xs text-gray-400">Employee Management System</p>
       </div>
-    </div>
-    <div class="hidden md:flex items-center gap-2 text-sm text-gray-500">
-      <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
-      All systems operational
     </div>
   </div>
 
   <!-- Main Content -->
-  <div class="flex flex-1">
+  <div class="flex flex-1 overflow-hidden">
 
-    <!-- Left Side — Info -->
-    <div class="hidden lg:flex lg:w-3/5 flex-col justify-center px-16 py-12">
+    <!-- Left Side -->
+    <div class="hidden lg:flex lg:w-3/5 flex-col justify-between px-16 py-12 relative overflow-hidden">
 
-      <div class="max-w-lg">
-        <span class="inline-block bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-          🚀 Version 1.0 — Now Live
-        </span>
+      <!-- Background decorative elements -->
+      <div class="absolute top-0 right-0 w-96 h-96 bg-blue-100 rounded-full opacity-30 -translate-y-1/2 translate-x-1/2"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-100 rounded-full opacity-40 translate-y-1/2 -translate-x-1/2"></div>
+
+      <div class="relative z-10 max-w-xl">
 
         <h2 class="text-4xl font-bold text-gray-800 leading-tight mb-4">
-          Empowering Better<br/>
-          <span class="text-blue-600">Workforce Decisions</span>
+          EMS Suite
         </h2>
+        <h3 class="text-2xl font-medium text-blue-600 mb-4">
+          Streamline Your Workforce Management
+        </h3>
 
-        <p class="text-gray-500 text-lg mb-8 leading-relaxed">
-          The Employee Management System is your complete solution for managing employees, tracking departments, and driving data-driven HR decisions with ease.
+        <p class="text-gray-500 text-base mb-8 leading-relaxed">
+          The EMS Suite is your comprehensive solution for employee lifecycle management.
+          Onboard new hires, manage departments, track salaries, and gain real-time
+          insights into your workforce — all from one powerful platform.
+          Secure access ensures your employee data remains protected at all times.
         </p>
 
-        <!-- Feature Cards -->
-        <div class="grid grid-cols-2 gap-4 mb-8">
-          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
-              <span class="text-xl">👥</span>
+        <!-- Feature list like Sattva -->
+        <div class="space-y-3 mb-10">
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-blue-600 text-sm">👥</span>
             </div>
-            <h4 class="text-sm font-semibold text-gray-700">Employee CRUD</h4>
-            <p class="text-xs text-gray-400 mt-1">Add, edit, delete and manage all employees</p>
+            <div>
+              <h4 class="text-sm font-semibold text-gray-700">Complete Employee Lifecycle Management</h4>
+              <p class="text-xs text-gray-400">Manage employee records, departments, positions and salary data efficiently</p>
+            </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-2">
-              <span class="text-xl">📊</span>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-green-600 text-sm">📊</span>
             </div>
-            <h4 class="text-sm font-semibold text-gray-700">Analytics Dashboard</h4>
-            <p class="text-xs text-gray-400 mt-1">Real-time charts and department insights</p>
+            <div>
+              <h4 class="text-sm font-semibold text-gray-700">Real-time Analytics & Reporting</h4>
+              <p class="text-xs text-gray-400">Visualize workforce trends, department distribution and salary insights</p>
+            </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
-              <span class="text-xl">🔒</span>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-purple-600 text-sm">🔐</span>
             </div>
-            <h4 class="text-sm font-semibold text-gray-700">Secure Auth</h4>
-            <p class="text-xs text-gray-400 mt-1">JWT authentication with password reset</p>
+            <div>
+              <h4 class="text-sm font-semibold text-gray-700">Enterprise-grade Security</h4>
+              <p class="text-xs text-gray-400">Secure access with JWT authentication, password encryption and role management</p>
+            </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
-            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mb-2">
-              <span class="text-xl">☁️</span>
+          <div class="flex items-start gap-3">
+            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-amber-600 text-sm">☁️</span>
             </div>
-            <h4 class="text-sm font-semibold text-gray-700">Cloud Deployed</h4>
-            <p class="text-xs text-gray-400 mt-1">Hosted on Vercel, Render & Neon</p>
+            <div>
+              <h4 class="text-sm font-semibold text-gray-700">Cloud-based & Always Accessible</h4>
+              <p class="text-xs text-gray-400">Access your workforce data anytime, anywhere with our cloud infrastructure</p>
+            </div>
           </div>
         </div>
 
-        <!-- Stats -->
-        <div class="flex gap-8">
-          <div>
-            <p class="text-2xl font-bold text-gray-800">Angular 21</p>
-            <p class="text-xs text-gray-400">Frontend Framework</p>
+      </div>
+
+      <!-- Bottom illustration area -->
+      <div class="relative z-10 flex gap-4">
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-5 py-4 flex items-center gap-3">
+          <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+            <span class="text-xl">👤</span>
           </div>
-          <div class="w-px bg-gray-200"></div>
           <div>
-            <p class="text-2xl font-bold text-gray-800">Node.js</p>
-            <p class="text-xs text-gray-400">Backend Runtime</p>
+            <p class="text-xs font-bold text-gray-700">Employee Profiles</p>
+            <p class="text-xs text-gray-400">Detailed records</p>
           </div>
-          <div class="w-px bg-gray-200"></div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-5 py-4 flex items-center gap-3">
+          <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+            <span class="text-xl">🏢</span>
+          </div>
           <div>
-            <p class="text-2xl font-bold text-gray-800">PostgreSQL</p>
-            <p class="text-xs text-gray-400">Database</p>
+            <p class="text-xs font-bold text-gray-700">Department Insights</p>
+            <p class="text-xs text-gray-400">Org structure view</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 px-5 py-4 flex items-center gap-3">
+          <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
+            <span class="text-xl">📈</span>
+          </div>
+          <div>
+            <p class="text-xs font-bold text-gray-700">Salary Analytics</p>
+            <p class="text-xs text-gray-400">Pay scale tracking</p>
           </div>
         </div>
       </div>
@@ -91,13 +115,21 @@
     </div>
 
     <!-- Right Side — Login Form -->
-    <div class="w-full lg:w-2/5 flex items-center justify-center px-8 py-12">
-      <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+    <div class="w-full lg:w-2/5 flex items-center justify-center px-8 py-8 bg-white shadow-xl">
+      <div class="w-full max-w-sm">
 
-        <div class="mb-6">
-          <h3 class="text-2xl font-bold text-gray-800">Welcome Back 👋</h3>
-          <p class="text-gray-500 text-sm mt-1">
-            Please sign in to begin managing your workforce efficiently.
+        <!-- Mobile Logo -->
+        <div class="flex items-center gap-3 mb-8 lg:hidden">
+          <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+            <span class="text-white font-bold">EM</span>
+          </div>
+          <h1 class="text-lg font-bold text-gray-800">EMS Suite</h1>
+        </div>
+
+        <div class="mb-7">
+          <h3 class="text-2xl font-bold text-gray-800">Welcome to EMS Suite 🙌</h3>
+          <p class="text-gray-500 text-sm mt-2 leading-relaxed">
+            Please sign in to access your employee management dashboard and begin your workforce journey.
           </p>
         </div>
 
@@ -105,31 +137,31 @@
 
           <div class="mb-4">
             <label class="block text-sm font-medium text-gray-700 mb-1">
-              Your Email <span class="text-red-500">*</span>
+              Your email <span class="text-red-500">*</span>
             </label>
             <input formControlName="email" type="email"
               placeholder="name@company.com"
-              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"/>
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all"/>
             @if (f['email'].invalid && f['email'].touched) {
               <p class="text-red-500 text-xs mt-1">Valid email is required</p>
             }
           </div>
 
-          <div class="mb-2">
+          <div class="mb-3">
             <label class="block text-sm font-medium text-gray-700 mb-1">
-              Your Password <span class="text-red-500">*</span>
+              Your password <span class="text-red-500">*</span>
             </label>
             <input formControlName="password" type="password"
               placeholder="••••••••"
-              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"/>
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm transition-all"/>
             @if (f['password'].invalid && f['password'].touched) {
               <p class="text-red-500 text-xs mt-1">Password is required</p>
             }
           </div>
 
-          <div class="flex justify-between items-center mb-6 mt-2">
+          <div class="flex justify-between items-center mb-6">
             <label class="flex items-center gap-2 text-sm text-gray-500 cursor-pointer">
-              <input type="checkbox" class="rounded border-gray-300">
+              <input type="checkbox" class="rounded border-gray-300 text-blue-600">
               Remember me
             </label>
             <span (click)="goToForgotPassword()"
@@ -145,19 +177,21 @@
           }
 
           <button type="submit" [disabled]="isLoading"
-            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-xl transition-colors">
+            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
             @if (isLoading) { Signing in... } @else { Sign in }
           </button>
 
         </form>
 
-        <p class="text-center text-sm text-gray-500 mt-5">
-          Don't have an account?
-          <span (click)="goToRegister()"
-            class="text-blue-600 font-semibold cursor-pointer hover:underline">
-            Create Account
-          </span>
-        </p>
+        <div class="border-t border-gray-100 mt-6 pt-5 text-center">
+          <p class="text-sm text-gray-500">
+            Don't have an account?
+            <span (click)="goToRegister()"
+              class="text-blue-600 font-semibold cursor-pointer hover:underline ml-1">
+              Create Account
+            </span>
+          </p>
+        </div>
 
       </div>
     </div>
@@ -165,9 +199,9 @@
   </div>
 
   <!-- Footer -->
-  <div class="text-center py-4 border-t border-gray-100 bg-white">
-    <p class="text-xs text-gray-400">© 2026 Employee Management System. All rights reserved.</p>
-    <p class="text-xs text-gray-300 mt-1">Built with Angular 21 + Node.js + PostgreSQL</p>
+  <div class="text-center py-3 border-t border-gray-100 bg-white">
+    <p class="text-xs text-gray-400">© 2026 EMS Suite. All rights reserved.</p>
+    <p class="text-xs text-gray-300 mt-0.5">An employee management product by Your Company</p>
   </div>
 
 </div>
