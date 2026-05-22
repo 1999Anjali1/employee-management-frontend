@@ -1,150 +1,173 @@
-<div class="min-h-screen flex">
+<div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex flex-col">
 
-  <!-- Left Side — Branding -->
-  <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 flex-col justify-between p-12 relative overflow-hidden">
-
-    <!-- Background decoration -->
-    <div class="absolute top-0 left-0 w-full h-full opacity-10">
-      <div class="absolute top-10 left-10 w-64 h-64 rounded-full bg-white"></div>
-      <div class="absolute bottom-20 right-10 w-96 h-96 rounded-full bg-white"></div>
-      <div class="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-white"></div>
-    </div>
-
-    <!-- Logo -->
-    <div class="relative z-10">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center">
-          <span class="text-blue-600 font-bold text-xl">EM</span>
-        </div>
-        <div>
-          <h1 class="text-white font-bold text-xl">Employee Management</h1>
-          <p class="text-blue-200 text-sm">System</p>
-        </div>
+  <!-- Top Bar -->
+  <div class="px-10 py-5 flex justify-between items-center border-b border-gray-100 bg-white shadow-sm">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center">
+        <span class="text-white font-bold text-lg">EM</span>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold text-gray-800">Employee Management</h1>
+        <p class="text-xs text-gray-400">Powered by Angular 21 + Node.js</p>
       </div>
     </div>
+    <div class="hidden md:flex items-center gap-2 text-sm text-gray-500">
+      <span class="w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+      All systems operational
+    </div>
+  </div>
 
-    <!-- Center Content -->
-    <div class="relative z-10">
-      <h2 class="text-4xl font-bold text-white leading-tight mb-4">
-        Manage Your Team<br/>
-        <span class="text-blue-200">Efficiently</span>
-      </h2>
-      <p class="text-blue-100 text-lg mb-8">
-        A complete solution for employee management, tracking, and analytics.
-      </p>
+  <!-- Main Content -->
+  <div class="flex flex-1">
 
-      <!-- Feature list -->
-      <div class="space-y-3">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-            <span class="text-white text-sm">✓</span>
+    <!-- Left Side — Info -->
+    <div class="hidden lg:flex lg:w-3/5 flex-col justify-center px-16 py-12">
+
+      <div class="max-w-lg">
+        <span class="inline-block bg-blue-100 text-blue-600 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+          🚀 Version 1.0 — Now Live
+        </span>
+
+        <h2 class="text-4xl font-bold text-gray-800 leading-tight mb-4">
+          Empowering Better<br/>
+          <span class="text-blue-600">Workforce Decisions</span>
+        </h2>
+
+        <p class="text-gray-500 text-lg mb-8 leading-relaxed">
+          The Employee Management System is your complete solution for managing employees, tracking departments, and driving data-driven HR decisions with ease.
+        </p>
+
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-2">
+              <span class="text-xl">👥</span>
+            </div>
+            <h4 class="text-sm font-semibold text-gray-700">Employee CRUD</h4>
+            <p class="text-xs text-gray-400 mt-1">Add, edit, delete and manage all employees</p>
           </div>
-          <span class="text-blue-100">Complete Employee CRUD Operations</span>
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-2">
+              <span class="text-xl">📊</span>
+            </div>
+            <h4 class="text-sm font-semibold text-gray-700">Analytics Dashboard</h4>
+            <p class="text-xs text-gray-400 mt-1">Real-time charts and department insights</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center mb-2">
+              <span class="text-xl">🔒</span>
+            </div>
+            <h4 class="text-sm font-semibold text-gray-700">Secure Auth</h4>
+            <p class="text-xs text-gray-400 mt-1">JWT authentication with password reset</p>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center mb-2">
+              <span class="text-xl">☁️</span>
+            </div>
+            <h4 class="text-sm font-semibold text-gray-700">Cloud Deployed</h4>
+            <p class="text-xs text-gray-400 mt-1">Hosted on Vercel, Render & Neon</p>
+          </div>
         </div>
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-            <span class="text-white text-sm">✓</span>
+
+        <!-- Stats -->
+        <div class="flex gap-8">
+          <div>
+            <p class="text-2xl font-bold text-gray-800">Angular 21</p>
+            <p class="text-xs text-gray-400">Frontend Framework</p>
           </div>
-          <span class="text-blue-100">Real-time Dashboard & Analytics</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-            <span class="text-white text-sm">✓</span>
+          <div class="w-px bg-gray-200"></div>
+          <div>
+            <p class="text-2xl font-bold text-gray-800">Node.js</p>
+            <p class="text-xs text-gray-400">Backend Runtime</p>
           </div>
-          <span class="text-blue-100">Secure JWT Authentication</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
-            <span class="text-white text-sm">✓</span>
+          <div class="w-px bg-gray-200"></div>
+          <div>
+            <p class="text-2xl font-bold text-gray-800">PostgreSQL</p>
+            <p class="text-xs text-gray-400">Database</p>
           </div>
-          <span class="text-blue-100">Department-wise Reports</span>
         </div>
       </div>
+
     </div>
 
-    <!-- Bottom -->
-    <div class="relative z-10">
-      <p class="text-blue-200 text-sm">© 2026 Employee Management System</p>
+    <!-- Right Side — Login Form -->
+    <div class="w-full lg:w-2/5 flex items-center justify-center px-8 py-12">
+      <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
+
+        <div class="mb-6">
+          <h3 class="text-2xl font-bold text-gray-800">Welcome Back 👋</h3>
+          <p class="text-gray-500 text-sm mt-1">
+            Please sign in to begin managing your workforce efficiently.
+          </p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Your Email <span class="text-red-500">*</span>
+            </label>
+            <input formControlName="email" type="email"
+              placeholder="name@company.com"
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"/>
+            @if (f['email'].invalid && f['email'].touched) {
+              <p class="text-red-500 text-xs mt-1">Valid email is required</p>
+            }
+          </div>
+
+          <div class="mb-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Your Password <span class="text-red-500">*</span>
+            </label>
+            <input formControlName="password" type="password"
+              placeholder="••••••••"
+              class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 text-sm"/>
+            @if (f['password'].invalid && f['password'].touched) {
+              <p class="text-red-500 text-xs mt-1">Password is required</p>
+            }
+          </div>
+
+          <div class="flex justify-between items-center mb-6 mt-2">
+            <label class="flex items-center gap-2 text-sm text-gray-500 cursor-pointer">
+              <input type="checkbox" class="rounded border-gray-300">
+              Remember me
+            </label>
+            <span (click)="goToForgotPassword()"
+              class="text-sm text-blue-600 font-medium cursor-pointer hover:underline">
+              Forgot password?
+            </span>
+          </div>
+
+          @if (errorMessage) {
+            <div class="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl mb-4">
+              ⚠️ {{ errorMessage }}
+            </div>
+          }
+
+          <button type="submit" [disabled]="isLoading"
+            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-xl transition-colors">
+            @if (isLoading) { Signing in... } @else { Sign in }
+          </button>
+
+        </form>
+
+        <p class="text-center text-sm text-gray-500 mt-5">
+          Don't have an account?
+          <span (click)="goToRegister()"
+            class="text-blue-600 font-semibold cursor-pointer hover:underline">
+            Create Account
+          </span>
+        </p>
+
+      </div>
     </div>
 
   </div>
 
-  <!-- Right Side — Login Form -->
-  <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-gray-50">
-    <div class="w-full max-w-md">
-
-      <!-- Mobile Logo -->
-      <div class="flex flex-col items-center mb-8 lg:hidden">
-        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center mb-4">
-          <span class="text-white font-bold text-2xl">EM</span>
-        </div>
-        <h1 class="text-2xl font-bold text-gray-800">Employee Management</h1>
-      </div>
-
-      <!-- Form Header -->
-      <div class="mb-8">
-        <h2 class="text-3xl font-bold text-gray-800">Welcome back!</h2>
-        <p class="text-gray-500 mt-2">Sign in to your account to continue</p>
-      </div>
-
-      <!-- Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-          <input formControlName="email" type="email"
-            placeholder="you@example.com"
-            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"/>
-          @if (f['email'].invalid && f['email'].touched) {
-            <p class="text-red-500 text-xs mt-1">Valid email is required</p>
-          }
-        </div>
-
-        <div class="mb-2">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-          <input formControlName="password" type="password"
-            placeholder="••••••••"
-            class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"/>
-          @if (f['password'].invalid && f['password'].touched) {
-            <p class="text-red-500 text-xs mt-1">Password is required</p>
-          }
-        </div>
-
-        <!-- Forgot Password -->
-        <div class="flex justify-end mb-6">
-          <span (click)="goToForgotPassword()"
-            class="text-sm text-blue-600 font-medium cursor-pointer hover:underline">
-            Forgot Password?
-          </span>
-        </div>
-
-        @if (errorMessage) {
-          <div class="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl mb-4 flex items-center gap-2">
-            <span>⚠️</span> {{ errorMessage }}
-          </div>
-        }
-
-        <button type="submit" [disabled]="isLoading"
-          class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-semibold py-3 rounded-xl transition-colors text-lg">
-          @if (isLoading) {
-            <span>Signing in...</span>
-          } @else {
-            <span>Sign In →</span>
-          }
-        </button>
-
-      </form>
-
-      <!-- Register Link -->
-      <p class="text-center text-sm text-gray-500 mt-6">
-        Don't have an account?
-        <span (click)="goToRegister()"
-          class="text-blue-600 font-semibold cursor-pointer hover:underline">
-          Create Account
-        </span>
-      </p>
-
-    </div>
+  <!-- Footer -->
+  <div class="text-center py-4 border-t border-gray-100 bg-white">
+    <p class="text-xs text-gray-400">© 2026 Employee Management System. All rights reserved.</p>
+    <p class="text-xs text-gray-300 mt-1">Built with Angular 21 + Node.js + PostgreSQL</p>
   </div>
 
 </div>
