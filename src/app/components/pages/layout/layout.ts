@@ -30,6 +30,7 @@ export class Layout implements OnInit {
   userName = 'User';
   currentUrl = '';
   currentDate = '';
+  isSidebarOpen = false;
 
   private router = inject(Router);
 
@@ -57,9 +58,10 @@ export class Layout implements OnInit {
     return this.currentUrl === path || this.currentUrl.startsWith(path + '/');
   }
 
-  navigate(path: string): void {
-    this.router.navigate([path]);
-  }
+ navigate(path: string): void {
+  this.router.navigate([path]);
+  this.isSidebarOpen = false;
+}
 
   getPageTitle(): string {
     if (this.currentUrl.includes('dashboard')) return 'Dashboard';
@@ -77,6 +79,14 @@ export class Layout implements OnInit {
     if (this.currentUrl.includes('employees')) return 'Manage all employees';
     if (this.currentUrl.includes('profile')) return 'Manage your account settings';
     return '';
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar(): void {
+    this.isSidebarOpen = false;
   }
 
   logout(): void {
