@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,8 @@ export class EmployeeForm implements OnInit {
   salarySuggestion: any = null;
   isSuggestingLoading = false;
   allEmployees: Employee[] = [];
+  isParsingResume = false;
+  resumeParseSuccess = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,7 @@ export class EmployeeForm implements OnInit {
     private route: ActivatedRoute,
   ) { }
   private toastService = inject(ToastService);
+  private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.initForm();
@@ -127,32 +130,70 @@ export class EmployeeForm implements OnInit {
     });
   }
 
-getSalarySuggestion(): void {
-  const department = this.f['department'].value;
-  const position = this.f['position'].value;
+  getSalarySuggestion(): void {
+    const department = this.f['department'].value;
+    const position = this.f['position'].value;
 
-  if (!department) {
-    this.toastService.show('Please select a department first', 'error');
+    if (!department) {
+      this.toastService.show('Please select a department first', 'error');
+      return;
+    }
+
+    if (!position) {
+      this.toastService.show('Please enter a position first', 'error');
+      return;
+    }
+
+    this.isSuggestingLoading = true;
+    this.salarySuggestion = null;
+
+    this.employeeService.getSalarySuggestion(department, position, this.allEmployees).subscribe({
+      next: (data) => {
+        this.employeeForm.patchValue({ salary: data.recommended });
+        this.isSuggestingLoading = false;
+        this.toastService.show(`🤖 AI suggested ₹${data.recommended.toLocaleString('en-IN')} for ${position} in ${department}`, 'success');
+      },
+      error: () => {
+        this.isSuggestingLoading = false;
+        this.toastService.show('Failed to get AI suggestion', 'error');
+      }
+    });
+  }
+
+ onResumeUpload(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (!input.files || input.files.length === 0) return;
+
+  const file = input.files[0];
+  if (file.type !== 'application/pdf') {
+    this.toastService.show('Please upload a PDF file only', 'error');
     return;
   }
 
-  if (!position) {
-    this.toastService.show('Please enter a position first', 'error');
-    return;
-  }
+  this.isParsingResume = true;
+  this.resumeParseSuccess = false;
+  this.cdr.detectChanges();
+  this.toastService.show('🤖 AI is reading your resume...', 'info');
 
-  this.isSuggestingLoading = true;
-  this.salarySuggestion = null;
-
-  this.employeeService.getSalarySuggestion(department, position, this.allEmployees).subscribe({
+  this.employeeService.parseResume(file).subscribe({
     next: (data) => {
-      this.employeeForm.patchValue({ salary: data.recommended });
-      this.isSuggestingLoading = false;
-      this.toastService.show(`🤖 AI suggested ₹${data.recommended.toLocaleString('en-IN')} for ${position} in ${department}`, 'success');
+      this.employeeForm.patchValue({
+        first_name: data.first_name || '',
+        last_name: data.last_name || '',
+        email: data.email || '',
+        phone: data.phone || '',
+        position: data.position || '',
+        department: data.department || ''
+      });
+      this.isParsingResume = false;
+      this.resumeParseSuccess = true;
+      this.cdr.detectChanges();
+      this.toastService.show('✅ Resume parsed! Form auto-filled.', 'success');
     },
     error: () => {
-      this.isSuggestingLoading = false;
-      this.toastService.show('Failed to get AI suggestion', 'error');
+      this.isParsingResume = false;
+      this.cdr.detectChanges();
+      this.toastService.show('❌ Failed to parse resume.', 'error');
     }
   });
 }
