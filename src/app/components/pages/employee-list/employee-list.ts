@@ -1,13 +1,13 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Employee, EmployeeService } from '../../../services/employee.sevice';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-employee-list',
-  imports: [CommonModule, FormsModule, CurrencyPipe],
+  imports: [CommonModule, FormsModule, CurrencyPipe,DatePipe],
   templateUrl: './employee-list.html',
   styleUrl: './employee-list.scss'
 })
@@ -20,6 +20,10 @@ export class EmployeeList implements OnInit {
   itemsPerPage = 5;
   showDeleteModal = false;
   deleteTargetId!: number;
+  showInsightsModal = false;
+  selectedEmployee: Employee | null = null;
+  employeeInsights: any = null;
+  insightsLoading = false;
 
   private toastService = inject(ToastService);
 
@@ -128,6 +132,32 @@ export class EmployeeList implements OnInit {
   }
 
   goToDashboard(): void {
-  this.router.navigate(['/dashboard']);
-}
+    this.router.navigate(['/dashboard']);
+  }
+
+  getInsights(emp: Employee): void {
+    this.selectedEmployee = emp;
+    this.showInsightsModal = true;
+    this.employeeInsights = null;
+    this.insightsLoading = true;
+
+    this.employeeService.getEmployeeInsights(emp, this.employees).subscribe({
+      next: (data) => {
+        this.employeeInsights = data;
+        this.insightsLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.insightsLoading = false;
+        this.toastService.show('Failed to get AI insights', 'error');
+        this.showInsightsModal = false;
+      }
+    });
+  }
+
+  closeInsights(): void {
+    this.showInsightsModal = false;
+    this.selectedEmployee = null;
+    this.employeeInsights = null;
+  }
 }

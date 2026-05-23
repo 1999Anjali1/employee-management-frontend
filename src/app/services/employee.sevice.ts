@@ -21,7 +21,7 @@ export class EmployeeService {
   private apiUrl = 'http://localhost:3000/api/employees'; // local development
   // private apiUrl = 'https://employee-management-backend-lms2.onrender.com/api/employees'; // production
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getAll(): Observable<Employee[]> {
     return this.http.get<Employee[]>(this.apiUrl);
@@ -32,8 +32,8 @@ export class EmployeeService {
   }
 
   getDepartments(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.apiUrl}/departments`);
-}
+    return this.http.get<string[]>(`${this.apiUrl}/departments`);
+  }
 
   create(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(this.apiUrl, employee);
@@ -48,10 +48,17 @@ export class EmployeeService {
   }
 
   getSalarySuggestion(department: string, position: string, employees: Employee[]): Observable<any> {
-  return this.http.post(`${this.apiUrl.replace('/employees', '')}/ai/salary-suggestion`, {
-    department,
-    position,
-    employeeData: employees
-  });
-}
+    return this.http.post(`${this.apiUrl.replace('/employees', '')}/ai/salary-suggestion`, {
+      department,
+      position,
+      employeeData: employees
+    });
+  }
+
+  getEmployeeInsights(employee: Employee, allEmployees: Employee[]): Observable<any> {
+    return this.http.post(`${this.apiUrl.replace('/employees', '')}/ai/employee-insights`, {
+      employee,
+      allEmployees
+    });
+  }
 }

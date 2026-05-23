@@ -7,7 +7,7 @@ import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-employee-form',
-  imports: [CommonModule, ReactiveFormsModule,DecimalPipe],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.scss'
 })
