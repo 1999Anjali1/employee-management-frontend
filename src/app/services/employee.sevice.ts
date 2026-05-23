@@ -46,4 +46,12 @@ export class EmployeeService {
   delete(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
   }
+
+  getSalarySuggestion(department: string, position: string, employees: Employee[]): Observable<any> {
+  return this.http.post(`${this.apiUrl.replace('/employees', '')}/ai/salary-suggestion`, {
+    department,
+    position,
+    employeeData: employees
+  });
+}
 }

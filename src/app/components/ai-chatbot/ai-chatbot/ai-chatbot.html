@@ -1,0 +1,141 @@
+<!-- Chat Toggle Button -->
+<div class="fixed bottom-6 right-6 z-50">
+
+  @if (!isOpen()) {
+    <button (click)="toggleChat()"
+      class="w-14 h-14 bg-blue-600 hover:bg-blue-700 rounded-full shadow-lg flex items-center justify-center text-white transition-all hover:scale-110">
+      <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+      </svg>
+      <!-- Notification dot -->
+      <span class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white"></span>
+    </button>
+  }
+
+  @if (isOpen()) {
+    <!-- Chat Window -->
+    <div class="w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 flex flex-col overflow-hidden"
+      style="height: 520px;">
+
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+            <span class="text-lg">🤖</span>
+          </div>
+          <div>
+            <p class="text-white font-semibold text-sm">HR Assistant</p>
+            <div class="flex items-center gap-1">
+              <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+              <p class="text-blue-100 text-xs">Powered by Claude AI</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <button (click)="clearChat()"
+            class="text-blue-100 hover:text-white text-xs px-2 py-1 rounded hover:bg-white hover:bg-opacity-20 transition-colors">
+            Clear
+          </button>
+          <button (click)="toggleChat()"
+            class="text-blue-100 hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages -->
+      <div #messagesContainer class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+        @for (msg of messages(); track msg.timestamp) {
+
+          @if (msg.role === 'assistant') {
+            <div class="flex gap-2 items-start">
+              <div class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span class="text-sm">🤖</span>
+              </div>
+              <div class="max-w-xs">
+                <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100">
+                  <p class="text-sm text-gray-700 whitespace-pre-wrap">{{ msg.content }}</p>
+                </div>
+                <p class="text-xs text-gray-400 mt-1 ml-2">{{ formatTime(msg.timestamp) }}</p>
+              </div>
+            </div>
+          }
+
+          @if (msg.role === 'user') {
+            <div class="flex gap-2 items-start justify-end">
+              <div class="max-w-xs">
+                <div class="bg-blue-600 rounded-2xl rounded-tr-sm px-4 py-3">
+                  <p class="text-sm text-white whitespace-pre-wrap">{{ msg.content }}</p>
+                </div>
+                <p class="text-xs text-gray-400 mt-1 text-right mr-2">{{ formatTime(msg.timestamp) }}</p>
+              </div>
+              <div class="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <span class="text-white text-xs font-bold">You</span>
+              </div>
+            </div>
+          }
+
+        }
+
+        @if (isLoading()) {
+          <div class="flex gap-2 items-start">
+            <div class="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+              <span class="text-sm">🤖</span>
+            </div>
+            <div class="bg-white rounded-2xl rounded-tl-sm px-4 py-3 shadow-sm border border-gray-100">
+              <div class="flex gap-1 items-center">
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                <div class="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Quick Questions -->
+      <div class="px-4 py-2 bg-white border-t border-gray-100">
+        <div class="flex gap-2 overflow-x-auto pb-1">
+          <button (click)="userInput = 'How many employees do we have?'; sendMessage()"
+            class="flex-shrink-0 text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-colors">
+            Total employees
+          </button>
+          <button (click)="userInput = 'Who are the top 3 earners?'; sendMessage()"
+            class="flex-shrink-0 text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-colors">
+            Top earners
+          </button>
+          <button (click)="userInput = 'What is the average salary?'; sendMessage()"
+            class="flex-shrink-0 text-xs bg-blue-50 text-blue-600 px-3 py-1.5 rounded-full hover:bg-blue-100 transition-colors">
+            Avg salary
+          </button>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="px-4 py-3 bg-white border-t border-gray-100">
+        <div class="flex gap-2 items-end">
+          <textarea
+            [(ngModel)]="userInput"
+            (keydown)="onKeyPress($event)"
+            placeholder="Ask about your employees..."
+            rows="1"
+            class="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none bg-gray-50">
+          </textarea>
+          <button (click)="sendMessage()"
+            [disabled]="!userInput.trim() || isLoading()"
+            class="w-10 h-10 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 rounded-xl flex items-center justify-center text-white transition-colors flex-shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-gray-400 mt-1">Press Enter to send</p>
+      </div>
+
+    </div>
+  }
+
+</div>

@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EmployeeService } from '../../../services/employee.sevice';
+import { Employee, EmployeeService } from '../../../services/employee.sevice';
 import { ToastService } from '../../../services/toast.service';
 
 @Component({
   selector: 'app-employee-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,DecimalPipe],
   templateUrl: './employee-form.html',
   styleUrl: './employee-form.scss'
 })
@@ -17,18 +17,24 @@ export class EmployeeForm implements OnInit {
   employeeId!: number;
   departments: string[] = [];
   departmentsLoading = true;
+  salarySuggestion: any = null;
+  isSuggestingLoading = false;
+  allEmployees: Employee[] = [];
 
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
-    private toastService = inject(ToastService);
+  ) { }
+  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.initForm();
     this.loadDepartments();
+    this.employeeService.getAll().subscribe(data => {
+      this.allEmployees = data;
+    });
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -67,56 +73,86 @@ export class EmployeeForm implements OnInit {
     });
   }
 
- onSubmit(): void {
-  if (this.employeeForm.invalid) {
-    this.employeeForm.markAllAsTouched();
+  onSubmit(): void {
+    if (this.employeeForm.invalid) {
+      this.employeeForm.markAllAsTouched();
+      return;
+    }
+
+    if (this.isEditMode) {
+      this.employeeService.update(this.employeeId, this.employeeForm.value).subscribe({
+        next: () => {
+          this.toastService.show('Employee updated successfully!', 'success');
+          setTimeout(() => this.router.navigate(['/employees']), 1000);
+        },
+        error: (err) => {
+          this.toastService.show(err.error?.error || 'Update failed!', 'error');
+        }
+      });
+    } else {
+      this.employeeService.create(this.employeeForm.value).subscribe({
+        next: () => {
+          this.toastService.show('Employee added successfully!', 'success');
+          setTimeout(() => this.router.navigate(['/employees']), 1000);
+        },
+        error: (err) => {
+          this.toastService.show(err.error?.error || 'Failed to add employee!', 'error');
+        }
+      });
+    }
+  }
+
+  loadDepartments(retryCount = 0): void {
+    this.departmentsLoading = true;
+    this.employeeService.getDepartments().subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          this.departments = data;
+          this.departmentsLoading = false;
+        } else if (retryCount < 3) {
+          setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
+        } else {
+          this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
+          this.departmentsLoading = false;
+        }
+      },
+      error: () => {
+        if (retryCount < 3) {
+          setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
+        } else {
+          this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
+          this.departmentsLoading = false;
+        }
+      }
+    });
+  }
+
+getSalarySuggestion(): void {
+  const department = this.f['department'].value;
+  const position = this.f['position'].value;
+
+  if (!department) {
+    this.toastService.show('Please select a department first', 'error');
     return;
   }
 
-  if (this.isEditMode) {
-    this.employeeService.update(this.employeeId, this.employeeForm.value).subscribe({
-      next: () => {
-        this.toastService.show('Employee updated successfully!', 'success');
-        setTimeout(() => this.router.navigate(['/employees']), 1000);
-      },
-      error: (err) => {
-        this.toastService.show(err.error?.error || 'Update failed!', 'error');
-      }
-    });
-  } else {
-    this.employeeService.create(this.employeeForm.value).subscribe({
-      next: () => {
-        this.toastService.show('Employee added successfully!', 'success');
-        setTimeout(() => this.router.navigate(['/employees']), 1000);
-      },
-      error: (err) => {
-        this.toastService.show(err.error?.error || 'Failed to add employee!', 'error');
-      }
-    });
+  if (!position) {
+    this.toastService.show('Please enter a position first', 'error');
+    return;
   }
-}
 
-loadDepartments(retryCount = 0): void {
-  this.departmentsLoading = true;
-  this.employeeService.getDepartments().subscribe({
+  this.isSuggestingLoading = true;
+  this.salarySuggestion = null;
+
+  this.employeeService.getSalarySuggestion(department, position, this.allEmployees).subscribe({
     next: (data) => {
-      if (data && data.length > 0) {
-        this.departments = data;
-        this.departmentsLoading = false;
-      } else if (retryCount < 3) {
-        setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
-      } else {
-        this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
-        this.departmentsLoading = false;
-      }
+      this.employeeForm.patchValue({ salary: data.recommended });
+      this.isSuggestingLoading = false;
+      this.toastService.show(`🤖 AI suggested ₹${data.recommended.toLocaleString('en-IN')} for ${position} in ${department}`, 'success');
     },
     error: () => {
-      if (retryCount < 3) {
-        setTimeout(() => this.loadDepartments(retryCount + 1), 2000);
-      } else {
-        this.departments = ['Engineering', 'HR', 'Finance', 'Marketing', 'Operations'];
-        this.departmentsLoading = false;
-      }
+      this.isSuggestingLoading = false;
+      this.toastService.show('Failed to get AI suggestion', 'error');
     }
   });
 }
