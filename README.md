@@ -1,122 +1,169 @@
-🏢 EMS Suite — Employee Management System (Frontend)
+# 🏢 EMS Suite — Employee Management System (Frontend)
 
-A modern, AI-powered Employee Management System built with Angular 21, featuring real-time dashboards, interactive charts, and intelligent HR tools powered by Groq AI.
-🌐 Live Demo: https://employee-management-frontend-ivory-ten.vercel.app
+![Angular](https://img.shields.io/badge/Angular-21.2.8-red?style=flat&logo=angular)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0-blue?style=flat&logo=tailwindcss)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat&logo=typescript)
+![Vercel](https://img.shields.io/badge/Deployed-Vercel-black?style=flat&logo=vercel)
 
-✨ Features
-Core Features
+A modern, AI-powered Employee Management System built with **Angular 21**, featuring real-time dashboards, interactive charts, and intelligent HR tools powered by **Groq AI**.
 
-🔐 JWT Authentication — Secure login, register, forgot/reset password
-👥 Employee CRUD — Add, edit, delete, and list employees with pagination
-🔍 Smart Search — Search employees by name or department
-📊 Interactive Dashboard — Real-time charts (Bar, Pie, Line, Doughnut) using Chart.js
-📱 Responsive Design — Mobile-friendly with hamburger sidebar navigation
+🌐 **Live Demo:** [https://employee-management-frontend-ivory-ten.vercel.app](https://employee-management-frontend-ivory-ten.vercel.app)  
+🔙 **Backend Repo:** [employee-management-backend](https://github.com/1999Anjali1/employee-management-backend)
 
-AI-Powered Features 🤖
+---
 
-AI HR Chatbot — Ask natural language questions about your workforce (powered by Groq/LLaMA)
-AI Salary Recommendation — Get AI-suggested salary ranges based on department, position, and existing data
-AI Employee Insights — One-click AI analysis of any employee (summary, tenure, salary rank, strengths, recommendations)
-AI Resume Parser — Upload a PDF resume and auto-fill the employee form instantly
+## ✨ Features
 
+### Core Features
+- 🔐 **JWT Authentication** — Secure login, register, forgot/reset password
+- 👥 **Employee CRUD** — Add, edit, delete, and list employees with pagination
+- 🔍 **Smart Search** — Real-time search by name or department
+- 📊 **Interactive Dashboard** — Bar, Pie, Line, Doughnut charts using Chart.js
+- 📱 **Responsive Design** — Mobile-friendly with hamburger sidebar navigation
+- 🔔 **Toast Notifications** — Success/error feedback for all actions
+- 🗑️ **Delete Modal** — Confirmation modal instead of browser alert
 
-🛠️ Tech Stack
-LayerTechnologyFrameworkAngular 21 (Standalone Components)StylingTailwind CSS v4ChartsChart.js + ng2-chartsIcons@ng-icons/heroiconsHTTPAngular HttpClientAuthJWT (localStorage)RoutingAngular Router (Lazy Loading)DeploymentVercel
+### AI-Powered Features 🤖
+- **AI HR Chatbot** — Natural language Q&A about workforce (Groq/LLaMA 3.3)
+- **AI Salary Recommendation** — Suggests salary range based on department + position
+- **AI Employee Insights** — One-click analysis: summary, tenure, salary rank, strengths
+- **AI Resume Parser** — Upload PDF → auto-fills employee form instantly
 
-🚀 Getting Started
-Prerequisites
+---
 
-Node.js v18+
-Angular CLI v21+
+## 🛠️ Tech Stack
 
-bashnpm install -g @angular/cli
-Installation
-bash# Clone the repository
+| Layer | Technology | Version |
+|---|---|---|
+| Framework | Angular (Standalone) | 21.2.8 |
+| Styling | Tailwind CSS | 4.3.0 |
+| Charts | Chart.js + ng2-charts | Latest |
+| Icons | @ng-icons/heroicons | Latest |
+| HTTP Client | Angular HttpClient | 21.x |
+| Auth | JWT (localStorage) | - |
+| Routing | Angular Router (Lazy) | 21.x |
+| Deployment | Vercel | - |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js v18+
+- Angular CLI v21+
+
+```bash
+npm install -g @angular/cli
+```
+
+### Installation
+
+```bash
+# Clone the repository
 git clone https://github.com/1999Anjali1/employee-management-frontend.git
-
-# Navigate to frontend
 cd employee-management-frontend
-
-# Install dependencies
 npm install
-
-# Start development server
 ng serve
-Open your browser at http://localhost:4200
+```
 
-⚙️ Environment Configuration
-Create src/environments/environment.ts:
-typescriptexport const environment = {
+Open your browser at `http://localhost:4200`
+
+---
+
+## ⚙️ Environment Configuration
+
+**`src/environments/environment.ts`** (Local):
+```typescript
+export const environment = {
   production: false,
   apiUrl: 'http://localhost:3000/api'
 };
-Create src/environments/environment.prod.ts:
-typescriptexport const environment = {
-  production: true,
-  apiUrl: 'https://your-backend.onrender.com/api'
-};
+```
 
-📁 Project Structure
+**`src/environments/environment.prod.ts`** (Production):
+```typescript
+export const environment = {
+  production: true,
+  apiUrl: 'https://employee-management-backend-lms2.onrender.com/api'
+};
+```
+
+---
+
+## 📁 Project Structure
 src/
 ├── app/
 │   ├── components/
-│   │   ├── ai-chatbot/          # AI HR Chatbot widget
-│   │   ├── layout/              # Sidebar + Navbar layout
+│   │   ├── ai-chatbot/          # 🤖 AI HR Chatbot widget
+│   │   ├── layout/              # Sidebar + Top Navbar shell
 │   │   ├── pages/
-│   │   │   ├── employee-list/   # Employee table with pagination
-│   │   │   └── employee-form/   # Add/Edit employee form
-│   │   └── toast/               # Toast notifications
+│   │   │   ├── employee-list/   # Table with search + pagination
+│   │   │   └── employee-form/   # Add/Edit form + AI Resume Parser
+│   │   └── toast/               # Toast notification component
 │   ├── guards/
-│   │   └── auth.guard.ts        # Route protection
+│   │   └── auth.guard.ts        # JWT route protection
 │   ├── interceptors/
-│   │   └── auth.interceptor.ts  # JWT token injection
+│   │   └── auth.interceptor.ts  # Auto-inject Bearer token
 │   ├── pages/
-│   │   ├── dashboard/           # Analytics dashboard
-│   │   ├── login/               # Login page
-│   │   ├── register/            # Register page
-│   │   ├── profile/             # User profile
-│   │   ├── forgot-password/     # Forgot password
-│   │   └── reset-password/      # Reset password
+│   │   ├── dashboard/           # Analytics + AI insights
+│   │   ├── login/               # Login with split layout
+│   │   ├── register/            # New user registration
+│   │   ├── profile/             # Edit profile + change password
+│   │   ├── forgot-password/     # Request password reset
+│   │   └── reset-password/      # Reset via email token
 │   └── services/
-│       ├── employee.service.ts  # Employee API calls
-│       ├── auth.service.ts      # Auth API calls
-│       └── toast.service.ts     # Toast notifications
+│       ├── employee.service.ts  # Employee + AI API calls
+│       ├── auth.service.ts      # Auth API calls + session
+│       └── toast.service.ts     # Global toast notifications
 └── environments/
-    ├── environment.ts           # Development config
-    └── environment.prod.ts      # Production config
+├── environment.ts           # Dev config
+└── environment.prod.ts      # Prod config
 
-🤖 AI Features Details
-1. HR Chatbot
-Ask natural language questions:
+---
 
-"How many employees do we have?"
-"Who joined after 2022?"
-"List all Engineering employees"
+## 🤖 AI Features Details
 
-2. Salary Recommendation
+### 1. HR Chatbot
+Floating chat widget powered by Groq LLaMA 3.3 70B:
+- *"How many employees do we have?"*
+- *"Who joined after 2022?"*
+- *"List all Engineering employees"*
+- Salary and personal data are **never revealed** (privacy enforced)
 
-Select Department + Position
-Click 🤖 AI button next to Salary
-AI suggests min/max/recommended salary based on existing data
+### 2. AI Salary Recommendation
+- Select Department + enter Position in Add Employee form
+- Click **🤖 AI** button next to Salary field
+- AI analyzes existing team salaries + market knowledge
+- Returns min / recommended / max range
+- Auto-fills salary field with recommended value
 
-3. Employee Insights
+### 3. AI Employee Insights
+- Click **🤖 AI** button on any employee row
+- Modal shows: Summary, Salary Analysis, Tenure, Department Rank, Key Strengths, HR Recommendation
+- Powered by Groq LLaMA with full team data as context
 
-Click 🤖 AI button on any employee row
-Get instant AI analysis: summary, salary rank, tenure, strengths, HR recommendations
+### 4. AI Resume Parser
+- Upload PDF resume in Add Employee form
+- AI extracts: name, email, phone, position, department
+- Form fields auto-filled instantly
+- Shows loading spinner → green checkmark on success
 
-4. Resume Parser
+---
 
-Upload PDF resume in Add Employee form
-AI extracts: name, email, phone, position, department
-Form auto-fills instantly
+## 🏗️ Build for Production
 
+```bash
+ng build --configuration production
+```
 
-🏗️ Build for Production
-bashng build --configuration production
-Output will be in dist/frontend/browser/
+Output: `dist/frontend/browser/`
 
-📦 Key Dependencies
-json{
+---
+
+## 📦 Key Dependencies
+
+```json
+{
   "@angular/core": "^21.2.0",
   "chart.js": "latest",
   "ng2-charts": "latest",
@@ -125,17 +172,17 @@ json{
   "tailwindcss": "^4.3.0",
   "flowbite": "^4.0.2"
 }
+```
 
-🔗 Related Repositories
+---
 
-🔙 Backend: employee-management-backend
+## 👩‍💻 Author
 
+**Anjali P**
+- GitHub: [@1999Anjali1](https://github.com/1999Anjali1)
 
-👩‍💻 Author
-Anjali P
+---
 
-GitHub: @1999Anjali1
+## 📄 License
 
-
-📄 License
-This project is open source and available under the MIT License.
+This project is open source and available under the [MIT License](LICENSE).
